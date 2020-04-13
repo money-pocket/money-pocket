@@ -1,0 +1,2 @@
+# money-pocket
+Main application
