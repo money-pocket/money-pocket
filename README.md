@@ -1,2 +1,3 @@
-# money-pocket
-Main application
+# Money Pocket
+
+Основное приложение
