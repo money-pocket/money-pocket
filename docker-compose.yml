@@ -22,6 +22,8 @@ services:
         build:
             context: pocket/docker/development
             dockerfile: php-cli.docker
+        environment:
+            - COMPOSER_MEMORY_LIMIT=-1
         volumes:
             - ./pocket:/app
             - composer:/root/.composer/cache
