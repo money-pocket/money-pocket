@@ -1,6 +1,6 @@
 up: docker-up
-init: docker-down-clear docker-pull docker-build docker-up manager-init
-test: manager-test
+init: docker-down-clear docker-pull docker-build docker-up pocket-init
+test: pocket-test
 
 docker-up:
 	docker-compose up -d
@@ -17,25 +17,25 @@ docker-pull:
 docker-build:
 	docker-compose build
 
-manager-init: manager-composer-install
+pocket-init: pocket-composer-install
 
-manager-composer-install:
-	docker-compose run --rm manager-php-cli composer install
+pocket-composer-install:
+	docker-compose run --rm pocket-php-cli composer install
 
-manager-test:
-	docker-compose run --rm manager-php-cli php bin/phpunit
+pocket-test:
+	docker-compose run --rm pocket-php-cli php bin/phpunit
 
 build-production:
-	docker build --pull --file=manager/docker/production/nginx.docker --tag ${REGISTRY_ADDRESS}/manager-nginx:${IMAGE_TAG} manager
-	docker build --pull --file=manager/docker/production/php-fpm.docker --tag ${REGISTRY_ADDRESS}/manager-php-fpm:${IMAGE_TAG} manager
-	docker build --pull --file=manager/docker/production/php-cli.docker --tag ${REGISTRY_ADDRESS}/manager-php-cli:${IMAGE_TAG} manager
-	docker build --pull --file=manager/docker/production/postgres.docker --tag ${REGISTRY_ADDRESS}/manager-postgres:${IMAGE_TAG} manager
+	docker build --pull --file=pocket/docker/production/nginx.docker --tag ${REGISTRY_ADDRESS}/pocket-nginx:${IMAGE_TAG} pocket
+	docker build --pull --file=pocket/docker/production/php-fpm.docker --tag ${REGISTRY_ADDRESS}/pocket-php-fpm:${IMAGE_TAG} pocket
+	docker build --pull --file=pocket/docker/production/php-cli.docker --tag ${REGISTRY_ADDRESS}/pocket-php-cli:${IMAGE_TAG} pocket
+	docker build --pull --file=pocket/docker/production/postgres.docker --tag ${REGISTRY_ADDRESS}/pocket-postgres:${IMAGE_TAG} pocket
 
 push-production:
-	docker push ${REGISTRY_ADDRESS}/manager-nginx:${IMAGE_TAG}
-	docker push ${REGISTRY_ADDRESS}/manager-php-fpm:${IMAGE_TAG}
-	docker push ${REGISTRY_ADDRESS}/manager-php-cli:${IMAGE_TAG}
-	docker push ${REGISTRY_ADDRESS}/manager-postgres:${IMAGE_TAG}
+	docker push ${REGISTRY_ADDRESS}/pocket-nginx:${IMAGE_TAG}
+	docker push ${REGISTRY_ADDRESS}/pocket-php-fpm:${IMAGE_TAG}
+	docker push ${REGISTRY_ADDRESS}/pocket-php-cli:${IMAGE_TAG}
+	docker push ${REGISTRY_ADDRESS}/pocket-postgres:${IMAGE_TAG}
 
 deploy-production:
 	ssh -o StrictHostKeyChecking=no ${PRODUCTION_HOST} -p ${PRODUCTION_PORT} 'rm -rf docker-compose.yml .env'
