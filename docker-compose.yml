@@ -1,36 +1,36 @@
 version: '3'
 services:
-    manager-nginx:
+    pocket-nginx:
         build:
-            context: ./manager/docker/development
+            context: pocket/docker/development
             dockerfile: nginx.docker
         volumes:
-            - ./manager:/app
+            - ./pocket:/app
         depends_on:
-            - manager-php-fpm
+            - pocket-php-fpm
         ports:
             - "8080:80"
-    manager-php-fpm:
+    pocket-php-fpm:
         build:
-            context: ./manager/docker/development
+            context: pocket/docker/development
             dockerfile: php-fpm.docker
         volumes:
-            - ./manager:/app
+            - ./pocket:/app
         depends_on:
-            - manager-postgres
-    manager-php-cli:
+            - pocket-postgres
+    pocket-php-cli:
         build:
-            context: ./manager/docker/development
+            context: pocket/docker/development
             dockerfile: php-cli.docker
         volumes:
-            - ./manager:/app
+            - ./pocket:/app
             - composer:/root/.composer/cache
         depends_on:
-            - manager-postgres
-    manager-postgres:
+            - pocket-postgres
+    pocket-postgres:
         image: postgres:11.2-alpine
         volumes:
-            - manager-postgres:/var/lib/postgresql/data
+            - pocket-postgres:/var/lib/postgresql/data
         environment:
             POSTGRES_USER: app
             POSTGRES_PASSWORD: secret
@@ -39,5 +39,5 @@ services:
             - "54321:5432"
 
 volumes:
-    manager-postgres:
+    pocket-postgres:
     composer:
