@@ -1,5 +1,14 @@
 {
+    "brick/math": {
+        "version": "0.8.15"
+    },
     "php": {
         "version": "7.4"
+    },
+    "ramsey/collection": {
+        "version": "1.0.1"
+    },
+    "ramsey/uuid": {
+        "version": "4.0.1"
     }
 }
