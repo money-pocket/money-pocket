@@ -8,23 +8,23 @@ use DateTimeImmutable;
 
 class User
 {
-    private string $id;
+    private Id $id;
     private DateTimeImmutable $date;
-    private string $email;
+    private Email $email;
     private string $passwordHash;
 
-    public function __construct(string $id, DateTimeImmutable $date, string $email, string $passwordHash)
+    public function __construct(Id $id, DateTimeImmutable $date, Email $email, string $hash)
     {
         $this->id = $id;
         $this->date = $date;
         $this->email = $email;
-        $this->passwordHash = $passwordHash;
+        $this->passwordHash = $hash;
     }
 
     /**
-     * @return string
+     * @return Id
      */
-    public function getId(): string
+    public function getId(): Id
     {
         return $this->id;
     }
@@ -38,9 +38,9 @@ class User
     }
 
     /**
-     * @return string
+     * @return Email
      */
-    public function getEmail(): string
+    public function getEmail(): Email
     {
         return $this->email;
     }
