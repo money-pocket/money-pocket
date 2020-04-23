@@ -8,17 +8,34 @@ use DateTimeImmutable;
 
 class User
 {
+    private const STATUS_WAIT = 'wait';
+    private const STATUS_ACTIVE = 'active';
+
     private Id $id;
     private DateTimeImmutable $date;
     private Email $email;
     private string $passwordHash;
+    private string $confirmToken;
+    private string $status;
 
-    public function __construct(Id $id, DateTimeImmutable $date, Email $email, string $hash)
+    public function __construct(Id $id, DateTimeImmutable $date, Email $email, string $hash, string $confirmToken)
     {
         $this->id = $id;
         $this->date = $date;
         $this->email = $email;
         $this->passwordHash = $hash;
+        $this->confirmToken = $confirmToken;
+        $this->status = self::STATUS_WAIT;
+    }
+
+    public function isWait(): bool
+    {
+        return $this->status === self::STATUS_WAIT;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE;
     }
 
     /**
@@ -51,5 +68,13 @@ class User
     public function getPasswordHash(): string
     {
         return $this->passwordHash;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfirmToken(): string
+    {
+        return $this->confirmToken;
     }
 }

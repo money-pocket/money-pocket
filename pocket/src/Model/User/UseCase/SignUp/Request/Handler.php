@@ -4,37 +4,58 @@
 namespace App\Model\User\UseCase\SignUp\Request;
 
 
+use App\Model\User\Entity\User\Email;
+use App\Model\User\Entity\User\Id;
 use App\Model\User\Entity\User\User;
-use DateTimeImmutable;
+use App\Model\User\Entity\User\UserRepository;
+use App\Model\User\Service\ConfirmTokenizer;
+use App\Model\User\Service\ConfirmTokenSender;
+use App\Model\User\Service\PasswordHasher;
 use Doctrine\ORM\EntityManagerInterface;
-use DomainException;
-use Ramsey\Uuid\Uuid;
 
 class Handler
 {
-    private EntityManagerInterface $em;
+    private UserRepository $users;
+    private PasswordHasher $hasher;
+    private ConfirmTokenizer $tokenizer;
+    private ConfirmTokenSender $sender;
+    private Flusher $flusher;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(
+        UserRepository $users,
+        PasswordHasher $hasher,
+        ConfirmTokenizer $tokenizer,
+        ConfirmTokenSender $sender,
+        Flusher $flusher
+    )
     {
-        $this->em = $em;
+        $this->users = $users;
+        $this->hasher = $hasher;
+        $this->tokenizer = $tokenizer;
+        $this->sender = $sender;
+        $this->flusher = $flusher;
     }
 
     public function handle(Command $command): void
     {
-        $email = mb_strtolower($command->email);
+        $email = new Email($command->email);
 
-        if ($this->em->getRepository(User::class)->findOneBy(['email' => $email])) {
-            throw new DomainException('User already exists');
+        if ($this->users->hasByEmail($email)) {
+            throw new \DomainException('User already exists');
         }
 
         $user = new User(
-            Uuid::uuid4()->toString(),
-            new DateTimeImmutable(),
+            Id::next(),
+            new \DateTimeImmutable(),
             $email,
-            password_hash($command->password, PASSWORD_ARGON2I)
+            $this->hasher->hash($command->password),
+            $token = $this->tokenizer->generate()
         );
 
-        $this->em->persist($user);
-        $this->em->flush();
+        $this->users->add($user);
+
+        $this->sender->send($email, $token);
+
+        $this->flusher->flush();
     }
 }
