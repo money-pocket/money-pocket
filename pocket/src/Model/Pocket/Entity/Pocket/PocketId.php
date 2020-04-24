@@ -4,6 +4,8 @@
 namespace App\Model\Pocket\Entity\Pocket;
 
 
+use Ramsey\Uuid\Uuid;
+
 class PocketId
 {
     private string $value;
@@ -11,6 +13,14 @@ class PocketId
     public function __construct(string $value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * @return static
+     */
+    public static function next(): PocketId
+    {
+        return new self(Uuid::uuid4()->toString());
     }
 
     /**

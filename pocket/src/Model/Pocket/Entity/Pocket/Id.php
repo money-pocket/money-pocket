@@ -16,8 +16,6 @@ class Id
     }
 
     /**
-     * Генерирует ID
-     *
      * @return Id
      */
     public static function next(): Id
