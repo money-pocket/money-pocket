@@ -4,25 +4,13 @@
 namespace App\Model\Pocket\Entity\Pocket;
 
 
-use Ramsey\Uuid\Uuid;
-
-class Id
+class ClientId
 {
     private string $value;
 
     public function __construct(string $value)
     {
         $this->value = $value;
-    }
-
-    /**
-     * Генерирует ID
-     *
-     * @return Id
-     */
-    public static function next(): Id
-    {
-        return new self(Uuid::uuid4()->toString());
     }
 
     /**
