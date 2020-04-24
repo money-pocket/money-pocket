@@ -28,11 +28,17 @@ class User
         $this->status = self::STATUS_WAIT;
     }
 
+    /**
+     * @return bool
+     */
     public function isWait(): bool
     {
         return $this->status === self::STATUS_WAIT;
     }
 
+    /**
+     * @return bool
+     */
     public function isActive(): bool
     {
         return $this->status === self::STATUS_ACTIVE;
