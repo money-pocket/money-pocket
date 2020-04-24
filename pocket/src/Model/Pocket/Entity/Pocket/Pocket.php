@@ -25,4 +25,44 @@ class Pocket
         $this->pocketId = $pocketId;
         $this->inviteToken = $inviteToken;
     }
+
+    /**
+     * @return Id
+     */
+    public function getId(): Id
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return ClientId
+     */
+    public function getClientId(): ClientId
+    {
+        return $this->clientId;
+    }
+
+    /**
+     * @return Network
+     */
+    public function getNetwork(): Network
+    {
+        return $this->network;
+    }
+
+    /**
+     * @return PocketId
+     */
+    public function getPocketId(): PocketId
+    {
+        return $this->pocketId;
+    }
+
+    /**
+     * @return InviteToken
+     */
+    public function getInviteToken(): InviteToken
+    {
+        return $this->inviteToken;
+    }
 }
