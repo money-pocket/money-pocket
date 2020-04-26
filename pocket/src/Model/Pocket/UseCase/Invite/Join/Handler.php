@@ -24,11 +24,13 @@ class Handler
         $clientId = new ClientId($command->clientId);
 
         $pocket = $this->pockets->getByClientId($clientId);
-        $targetPocketId = $this->pockets->getPocketIdByInviteToken($command->inviteToken);
+        $targetPocket = $this->pockets->getByInviteToken($command->inviteToken);
 
-        $pocket->changePocketId($targetPocketId);
+        $pocket->changePocketId($targetPocket->getPocketId());
+        $targetPocket->removeInviteToken();
 
         $this->pockets->add($pocket);
+        $this->pockets->add($targetPocket);
 
         $this->flusher->flush();
     }

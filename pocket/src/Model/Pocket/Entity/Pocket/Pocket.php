@@ -47,6 +47,12 @@ class Pocket
         $this->pocketId = $pocketId;
     }
 
+
+    public function removeInviteToken(): void
+    {
+        $this->inviteToken = null;
+    }
+
     /**
      * @return Id
      */
