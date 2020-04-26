@@ -27,6 +27,19 @@ class Pocket
     }
 
     /**
+     * @param InviteToken $inviteToken
+     * @param \DateTimeImmutable $date
+     */
+    public function requestInviteToken(InviteToken $inviteToken, \DateTimeImmutable $date): void
+    {
+        if ($this->inviteToken && !$this->inviteToken->isExpiredTo($date)) {
+            throw new \DomainException('Invite token is already created');
+        }
+
+        $this->inviteToken = $inviteToken;
+    }
+
+    /**
      * @return Id
      */
     public function getId(): Id
