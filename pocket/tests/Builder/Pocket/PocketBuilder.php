@@ -56,10 +56,11 @@ class PocketBuilder
      * @param InviteToken $inviteToken
      * @return $this
      */
-    public function withInviteToken(InviteToken $inviteToken): self
+    public function withInviteToken(InviteToken $inviteToken = null): self
     {
         $clone = clone $this;
-        $clone->inviteToken = $inviteToken;
+        $clone->inviteToken = $inviteToken ??
+            new InviteToken('token', new \DateTimeImmutable('+15 minutes'));
 
         return $clone;
     }

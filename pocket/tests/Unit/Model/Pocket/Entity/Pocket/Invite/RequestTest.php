@@ -27,12 +27,11 @@ class RequestTest extends TestCase
     {
         $pocketBuilder = new PocketBuilder();
         $now = new \DateTimeImmutable();
-        $token = new InviteToken('token', $now->modify('+15 minutes'));
-        $token2 = new InviteToken('token2', $now->modify('+45 minutes'));
+        $token = new InviteToken('token2', $now->modify('+45 minutes'));
 
-        $pocket = $pocketBuilder->withInviteToken($token)->build();
+        $pocket = $pocketBuilder->withInviteToken()->build();
 
         $this->expectExceptionMessage('Invite token is already created');
-        $pocket->requestInviteToken($token2, new \DateTimeImmutable());
+        $pocket->requestInviteToken($token, new \DateTimeImmutable());
     }
 }

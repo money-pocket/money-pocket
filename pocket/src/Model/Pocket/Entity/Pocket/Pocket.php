@@ -99,7 +99,7 @@ class Pocket
     /**
      * @return InviteToken
      */
-    public function getInviteToken(): InviteToken
+    public function getInviteToken(): ?InviteToken
     {
         return $this->inviteToken;
     }
