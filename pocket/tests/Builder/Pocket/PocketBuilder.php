@@ -26,9 +26,18 @@ class PocketBuilder
         $this->pocketId = new PocketId('pocketId');
     }
 
-    public function build(): self
-    {
+    public function build(
+        Id $id = null,
+        ClientId $clientId = null,
+        Network $network = null,
+        PocketId $pocketId = null
+    ): self {
         $clone = clone $this;
+
+        $clone->id = $id ?? Id::next();
+        $clone->clientId = $clientId ?? new ClientId('clientId');
+        $clone->network = $network ?? new Network('network');
+        $clone->pocketId = $pocketId ?? new PocketId('pocketId');
 
         return $clone;
     }
