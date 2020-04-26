@@ -40,6 +40,14 @@ class Pocket
     }
 
     /**
+     * @param PocketId $pocketId
+     */
+    public function changePocketId(PocketId $pocketId): void
+    {
+        $this->pocketId = $pocketId;
+    }
+
+    /**
      * @return Id
      */
     public function getId(): Id

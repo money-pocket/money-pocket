@@ -12,5 +12,7 @@ interface PocketRepository
 
     public function getByClientId(ClientId $clientId): Pocket;
 
+    public function getPocketIdByInviteToken(string $inviteToken): PocketId;
+
     public function add(Pocket $pocket): void;
 }
