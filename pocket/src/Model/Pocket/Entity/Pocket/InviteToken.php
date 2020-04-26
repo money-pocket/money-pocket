@@ -4,17 +4,36 @@
 namespace App\Model\Pocket\Entity\Pocket;
 
 
+use Webmozart\Assert\Assert;
+
 class InviteToken
 {
-    private string $value;
+    private string $token;
 
-    public function __construct(string $value)
+    private \DateTimeImmutable $expires;
+
+    public function __construct(string $token, \DateTimeImmutable $expires)
     {
-        $this->value = $value;
+        Assert::notEmpty($token);
+        
+        $this->token = $token;
+        $this->expires = $expires;
     }
 
-    public function getValue(): string
+    /**
+     * @param \DateTimeImmutable $date
+     * @return bool
+     */
+    public function isExpiredTo(\DateTimeImmutable $date): bool
     {
-        return $this->value;
+        return $this->expires <= $date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
     }
 }
