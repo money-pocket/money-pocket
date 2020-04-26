@@ -34,6 +34,7 @@ class Handler
 
         $pocket = new Pocket(
             Id::next(),
+            new \DateTimeImmutable(),
             $clientId,
             $network,
             PocketId::next()

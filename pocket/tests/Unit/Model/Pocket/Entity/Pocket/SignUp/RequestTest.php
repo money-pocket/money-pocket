@@ -18,6 +18,7 @@ class RequestTest extends TestCase
     {
         $pocket = new Pocket(
             $id = Id::next(),
+            $date = new \DateTimeImmutable(),
             $clientId = new ClientId('clientId'),
             $network = new Network('network'),
             $pocketId = PocketId::next(),
@@ -25,6 +26,7 @@ class RequestTest extends TestCase
         );
 
         self::assertEquals($id, $pocket->getId());
+        self::assertEquals($date, $pocket->getDate());
         self::assertEquals($clientId, $pocket->getClientId());
         self::assertEquals($network, $pocket->getNetwork());
         self::assertEquals($pocketId, $pocket->getPocketId());

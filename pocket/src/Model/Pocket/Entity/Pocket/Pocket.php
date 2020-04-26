@@ -7,6 +7,7 @@ namespace App\Model\Pocket\Entity\Pocket;
 class Pocket
 {
     private Id $id;
+    private \DateTimeImmutable $date;
     private ClientId $clientId;
     private Network $network;
     private PocketId $pocketId;
@@ -14,12 +15,14 @@ class Pocket
 
     public function __construct(
         Id $id,
+        \DateTimeImmutable $date,
         ClientId $clientId,
         Network $network,
         PocketId $pocketId,
         InviteToken $inviteToken = null
     ) {
         $this->id = $id;
+        $this->date = $date;
         $this->clientId = $clientId;
         $this->network = $network;
         $this->pocketId = $pocketId;
@@ -59,6 +62,14 @@ class Pocket
     public function getId(): Id
     {
         return $this->id;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getDate(): \DateTimeImmutable
+    {
+        return $this->date;
     }
 
     /**
