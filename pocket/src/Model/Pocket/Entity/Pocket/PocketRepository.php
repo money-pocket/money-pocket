@@ -10,7 +10,7 @@ interface PocketRepository
 {
     public function hasByClientId(ClientId $clientId): bool;
 
-    public function getByClientId(ClientId $clientId): User;
+    public function getByClientId(ClientId $clientId): Pocket;
 
     public function add(Pocket $pocket): void;
 }
