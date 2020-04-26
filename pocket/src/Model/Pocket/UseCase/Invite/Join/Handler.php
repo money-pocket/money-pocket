@@ -33,9 +33,6 @@ class Handler
         $pocket->changePocketId($targetPocket->getPocketId());
         $targetPocket->removeInviteToken();
 
-        $this->pockets->add($pocket);
-        $this->pockets->add($targetPocket);
-
         $this->flusher->flush();
     }
 }
