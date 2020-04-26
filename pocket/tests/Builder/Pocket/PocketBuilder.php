@@ -8,38 +8,47 @@ use App\Model\Pocket\Entity\Pocket\ClientId;
 use App\Model\Pocket\Entity\Pocket\Id;
 use App\Model\Pocket\Entity\Pocket\InviteToken;
 use App\Model\Pocket\Entity\Pocket\Network;
+use App\Model\Pocket\Entity\Pocket\Pocket;
 use App\Model\Pocket\Entity\Pocket\PocketId;
 
 class PocketBuilder
 {
     private Id $id;
+    private \DateTimeImmutable $date;
     private ClientId $clientId;
     private Network $network;
     private PocketId $pocketId;
     private ?InviteToken $inviteToken;
 
-    public function __construct()
-    {
-        $this->id = Id::next();
-        $this->clientId = new ClientId('clientId');
-        $this->network = new Network('network');
-        $this->pocketId = new PocketId('pocketId');
-    }
-
-    public function build(
+    public function __construct(
         Id $id = null,
+        \DateTimeImmutable $date = null,
         ClientId $clientId = null,
         Network $network = null,
         PocketId $pocketId = null
-    ): self {
-        $clone = clone $this;
+    ) {
+        $this->id = $id ?? Id::next();
+        $this->date = $date ?? new \DateTimeImmutable();
+        $this->clientId = $clientId ?? new ClientId('clientId');
+        $this->network = $network ?? new Network('network');
+        $this->pocketId = $pocketId ?? new PocketId('pocketId');
+    }
 
-        $clone->id = $id ?? Id::next();
-        $clone->clientId = $clientId ?? new ClientId('clientId');
-        $clone->network = $network ?? new Network('network');
-        $clone->pocketId = $pocketId ?? new PocketId('pocketId');
+    public function build(): Pocket
+    {
+        $pocket = new Pocket(
+            $this->id,
+            $this->date,
+            $this->clientId,
+            $this->network,
+            $this->pocketId,
+        );
 
-        return $clone;
+        if ($this->inviteToken) {
+            $pocket->requestInviteToken($this->inviteToken, new \DateTimeImmutable());
+        }
+
+        return $pocket;
     }
 
     /**
