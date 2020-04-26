@@ -32,6 +32,7 @@ class PocketBuilder
         $this->clientId = $clientId ?? new ClientId('clientId');
         $this->network = $network ?? new Network('network');
         $this->pocketId = $pocketId ?? new PocketId('pocketId');
+        $this->inviteToken = null;
     }
 
     public function build(): Pocket
