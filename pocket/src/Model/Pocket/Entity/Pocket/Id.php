@@ -5,6 +5,7 @@ namespace App\Model\Pocket\Entity\Pocket;
 
 
 use Ramsey\Uuid\Uuid;
+use Webmozart\Assert\Assert;
 
 class Id
 {
@@ -12,6 +13,7 @@ class Id
 
     public function __construct(string $value)
     {
+        Assert::notEmpty($value);
         $this->value = $value;
     }
 

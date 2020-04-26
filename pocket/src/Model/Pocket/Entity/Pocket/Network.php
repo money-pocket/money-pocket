@@ -4,12 +4,15 @@
 namespace App\Model\Pocket\Entity\Pocket;
 
 
+use Webmozart\Assert\Assert;
+
 class Network
 {
     private string $value;
 
     public function __construct(string $value)
     {
+        Assert::notEmpty($value);
         $this->value = $value;
     }
 
