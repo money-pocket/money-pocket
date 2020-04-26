@@ -44,9 +44,18 @@ class Pocket
 
     /**
      * @param PocketId $pocketId
+     * @param InviteToken $inviteToken
+     * @param \DateTimeImmutable $date
      */
-    public function changePocketId(PocketId $pocketId): void
-    {
+    public function changePocketIdByInviteToken(
+        PocketId $pocketId,
+        InviteToken $inviteToken,
+        \DateTimeImmutable $date
+    ): void {
+        if ($inviteToken->isExpiredTo($date)) {
+            throw new \DomainException('Expired or invalid token');
+        }
+
         $this->pocketId = $pocketId;
     }
 

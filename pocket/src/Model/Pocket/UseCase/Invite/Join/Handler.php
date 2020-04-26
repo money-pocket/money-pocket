@@ -26,11 +26,12 @@ class Handler
         $pocket = $this->pockets->getByClientId($clientId);
         $targetPocket = $this->pockets->getByInviteToken($command->inviteToken);
 
-        if (!$targetPocket->getInviteToken()->isExpiredTo(new \DateTimeImmutable())) {
-            throw new \DomainException('Expired or invalid token');
-        }
+        $pocket->changePocketIdByInviteToken(
+            $targetPocket->getPocketId(),
+            $targetPocket->getInviteToken(),
+            new \DateTimeImmutable()
+        );
 
-        $pocket->changePocketId($targetPocket->getPocketId());
         $targetPocket->removeInviteToken();
 
         $this->flusher->flush();

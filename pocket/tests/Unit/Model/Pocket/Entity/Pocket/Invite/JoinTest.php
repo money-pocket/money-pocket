@@ -12,18 +12,40 @@ class JoinTest extends TestCase
     public function testSuccess()
     {
         $pocketBuilder = new PocketBuilder();
+        $now = new \DateTimeImmutable();
 
         $pocket = $pocketBuilder->build();
         $targetPocket = $pocketBuilder->withInviteToken()->build();
 
-        $targetPocket->getInviteToken()->isExpiredTo(new \DateTimeImmutable());
-
         $targetPocketId = $targetPocket->getPocketId();
 
-        $pocket->changePocketId($targetPocketId);
+        $pocket->changePocketIdByInviteToken(
+            $targetPocketId,
+            $targetPocket->getInviteToken(),
+            $now
+        );
         $targetPocket->removeInviteToken();
 
         self::assertEquals($targetPocketId, $pocket->getPocketId());
         self::assertNull($targetPocket->getInviteToken());
+    }
+
+    public function testExpired()
+    {
+        $pocketBuilder = new PocketBuilder();
+        $now = new \DateTimeImmutable();
+
+        $pocket = $pocketBuilder->build();
+        $targetPocket = $pocketBuilder->withInviteToken()->build();
+
+        $targetPocketId = $targetPocket->getPocketId();
+
+        $this->expectExceptionMessage('Expired or invalid token');
+
+        $pocket->changePocketIdByInviteToken(
+            $targetPocketId,
+            $targetPocket->getInviteToken(),
+            $now->modify('+1 day')
+        );
     }
 }
