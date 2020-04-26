@@ -4,15 +4,26 @@
 namespace Model\Pocket\Service;
 
 
+use App\Model\Pocket\Entity\Pocket\InviteToken;
 use Ramsey\Uuid\Uuid;
 
 class InviteTokenizer
 {
-    /**
-     * @return string
-     */
-    public function generate(): string
+    private \DateInterval $interval;
+
+    public function __construct(\DateInterval $interval)
     {
-        return Uuid::uuid4()->toString();
+        $this->interval = $interval;
+    }
+
+    /**
+     * @return InviteToken
+     */
+    public function generate(): InviteToken
+    {
+        return new InviteToken(
+            Uuid::uuid4()->toString(),
+            (new \DateTimeImmutable())->add($this->interval)
+        );
     }
 }
