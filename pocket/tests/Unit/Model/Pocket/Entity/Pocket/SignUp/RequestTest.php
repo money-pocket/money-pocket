@@ -22,7 +22,6 @@ class RequestTest extends TestCase
             $pocketId = PocketId::next()
         );
 
-
         self::assertEquals($id, $pocket->getId());
         self::assertEquals($clientId, $pocket->getClientId());
         self::assertEquals($network, $pocket->getNetwork());
