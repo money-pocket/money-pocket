@@ -35,7 +35,7 @@ class Id
     /**
      * @return string
      */
-    public function getId(): string
+    public function getValue(): string
     {
         return $this->id;
     }
