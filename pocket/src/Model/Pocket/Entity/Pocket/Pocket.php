@@ -3,14 +3,29 @@
 
 namespace App\Model\Pocket\Entity\Pocket;
 
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(name="pockets", uniqueConstraints={
+        @ORM\UniqueConstraint(columns={"client_id"}
+        @ORM\UniqueConstraint(columns={"invite_token"}
+ * })
+ */
 class Pocket
 {
     private Id $id;
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
     private \DateTimeImmutable $date;
     private ClientId $clientId;
     private Network $network;
     private PocketId $pocketId;
+    /**
+     * @ORM\Embedded(class="InviteToken", columnPrefix="invite_token_")
+     */
     private ?InviteToken $inviteToken;
 
     public function __construct(
@@ -111,5 +126,15 @@ class Pocket
     public function getInviteToken(): ?InviteToken
     {
         return $this->inviteToken;
+    }
+
+    /**
+     * @ORM\PostLoad
+     */
+    public function checkEmbeds(): void
+    {
+        if (!$this->inviteToken->getToken()) {
+            $this->inviteToken = null;
+        }
     }
 }

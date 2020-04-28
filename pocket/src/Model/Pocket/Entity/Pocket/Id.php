@@ -6,15 +6,22 @@ namespace App\Model\Pocket\Entity\Pocket;
 
 use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\Assert;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Embeddable
+ */
 class Id
 {
-    private string $value;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private string $id;
 
     public function __construct(string $value)
     {
         Assert::notEmpty($value);
-        $this->value = $value;
+        $this->id = $value;
     }
 
     /**
@@ -28,8 +35,8 @@ class Id
     /**
      * @return string
      */
-    public function getValue(): string
+    public function getId(): string
     {
-        return $this->value;
+        return $this->id;
     }
 }
