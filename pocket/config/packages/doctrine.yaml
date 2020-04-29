@@ -16,6 +16,12 @@ doctrine:
             collate: -
 
         url: '%env(resolve:DATABASE_URL)%'
+
+        types:
+            pocket_id: 'App\Model\Pocket\Entity\Pocket\IdType'
+            pocket_client_id: 'App\Model\Pocket\Entity\Pocket\ClientIdType'
+            pocket_network: 'App\Model\Pocket\Entity\Pocket\NetworkType'
+            pocket_pocket_id: 'App\Model\Pocket\Entity\Pocket\PocketIdType'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
