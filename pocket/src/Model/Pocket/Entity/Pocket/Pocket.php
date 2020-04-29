@@ -6,18 +6,18 @@ namespace App\Model\Pocket\Entity\Pocket;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="pockets", uniqueConstraints={
-        @ORM\UniqueConstraint(columns={"client_id"}
-        @ORM\UniqueConstraint(columns={"invite_token"}
+        @ORM\UniqueConstraint(columns={"client_id"}),
+        @ORM\UniqueConstraint(columns={"invite_token_token"})
  * })
  */
 class Pocket
 {
     /**
      * @ORM\Column(type="pocket_id")
-     * @ORM\Id
+     * @ORM\Id()
      */
     private Id $id;
     /**
@@ -142,7 +142,7 @@ class Pocket
     }
 
     /**
-     * @ORM\PostLoad
+     * @ORM\PostLoad()
      */
     public function checkEmbeds(): void
     {

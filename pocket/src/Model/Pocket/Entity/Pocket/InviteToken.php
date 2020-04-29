@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Embeddable
+ * @ORM\Embeddable()
  */
 class InviteToken
 {
