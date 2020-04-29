@@ -25,11 +25,11 @@ class Pocket
      */
     private \DateTimeImmutable $date;
     /**
-     * @ORM\Column(type="pocket_client_id")
+     * @ORM\Column(type="pocket_client_id", length=32)
      */
     private ClientId $clientId;
     /**
-     * @ORM\Column(type="pocket_network")
+     * @ORM\Column(type="pocket_network", length=32)
      */
     private Network $network;
     /**
