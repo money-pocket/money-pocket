@@ -5,9 +5,9 @@ namespace App\Model\Pocket\Entity\Pocket;
 
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\StringType;
+use Doctrine\DBAL\Types\GuidType;
 
-class IdType extends StringType
+class IdType extends GuidType
 {
     public const NAME = 'pocket_id';
 
@@ -24,5 +24,14 @@ class IdType extends StringType
     public function getName(): string
     {
         return self::NAME;
+    }
+
+    /**
+     * @param AbstractPlatform $platform
+     * @return bool
+     */
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
+    {
+        return true;
     }
 }
