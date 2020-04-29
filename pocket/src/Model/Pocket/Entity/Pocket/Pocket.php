@@ -17,6 +17,7 @@ class Pocket
 {
     /**
      * @ORM\Column(type="pocket_id")
+     * @ORM\Id
      */
     private Id $id;
     /**
