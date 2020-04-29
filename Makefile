@@ -23,7 +23,7 @@ pocket-composer-install:
 	docker-compose run --rm pocket-php-cli composer install
 
 pocket-wait-db:
-	until docker-compose exec -T pocket-posgres pg_isready --timeout=0 --dbname=app ; do sleep 1; done
+	until docker-compose exec -T pocket-postgres pg_isready --timeout=0 --dbname=app ; do sleep 1; done
 
 pocket-migrations:
 	docker-compose run --rm pocket-php-cli php bin/console doctrine:migrations:migrate --no-interaction
