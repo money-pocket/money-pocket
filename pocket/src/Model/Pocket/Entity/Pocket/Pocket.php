@@ -15,13 +15,25 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Pocket
 {
+    /**
+     * @ORM\Column(type="pocket_id")
+     */
     private Id $id;
     /**
      * @ORM\Column(type="datetime_immutable")
      */
     private \DateTimeImmutable $date;
+    /**
+     * @ORM\Column(type="pocket_client_id")
+     */
     private ClientId $clientId;
+    /**
+     * @ORM\Column(type="pocket_network")
+     */
     private Network $network;
+    /**
+     * @ORM\Column(type="pocket_pocket_id")
+     */
     private PocketId $pocketId;
     /**
      * @ORM\Embedded(class="InviteToken", columnPrefix="invite_token_")
