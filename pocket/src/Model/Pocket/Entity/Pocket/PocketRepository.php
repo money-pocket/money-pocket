@@ -31,8 +31,8 @@ class PocketRepository
     {
         return $this->repo->createQueryBuilder('t')
                 ->select('COUNT(t.id)')
-                ->andWhere('t.client_id = :client_id')
-                ->setParameter(':client_id', $clientId->getValue())
+                ->andWhere('t.clientId = :clientId')
+                ->setParameter(':clientId', $clientId->getValue())
                 ->getQuery()->getSingleScalarResult() > 0;
     }
 
