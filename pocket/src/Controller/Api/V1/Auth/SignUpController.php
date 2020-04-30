@@ -13,17 +13,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SignUpController extends AbstractController
 {
     private LoggerInterface $logger;
     private SerializerInterface $serializer;
+    private TranslatorInterface $translator;
     private ValidatorInterface $validator;
 
-    public function __construct(SerializerInterface $serializer, ValidatorInterface $validator, LoggerInterface $logger)
-    {
+    public function __construct(
+        SerializerInterface $serializer,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        LoggerInterface $logger
+    ) {
         $this->serializer = $serializer;
         $this->validator = $validator;
+        $this->translator = $translator;
         $this->logger = $logger;
     }
 
@@ -47,7 +54,14 @@ class SignUpController extends AbstractController
         try {
             $handler->handle($command);
         } catch (\DomainException $e) {
-            $this->logger->error($e->getMessage(), ['exception' => $e]);
+            $this->logger->error($e->getMessage(), ['exception' => $e, 'request' => $request]);
+
+            $json = $this->serializer->serialize(
+                ['error' => $this->translator->trans($e->getMessage(), [], 'exceptions')],
+                'json'
+            );
+
+            return new JsonResponse($json, 409, [], true);
         }
 
         return $this->json([], 201);
