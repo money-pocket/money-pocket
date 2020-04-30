@@ -13,12 +13,20 @@ class PocketRepository
     private EntityManagerInterface $em;
     private ObjectRepository $repo;
 
+    /**
+     * PocketRepository constructor.
+     * @param EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->repo = $em->getRepository(Pocket::class);
     }
 
+    /**
+     * @param ClientId $clientId
+     * @return bool
+     */
     public function hasByClientId(ClientId $clientId): bool
     {
         return $this->repo->createQueryBuilder('t')
@@ -58,6 +66,24 @@ class PocketRepository
         return $pocket;
     }
 
+    /**
+     * @param Id $id
+     * @return Pocket
+     * @throws EntityNotFoundException
+     */
+    public function get(Id $id): Pocket
+    {
+        /** @var Pocket $pocket */
+        if (!$pocket = $this->repo->find($id->getValue())) {
+            throw new EntityNotFoundException('Pocket is not found.');
+        }
+
+        return $pocket;
+    }
+
+    /**
+     * @param Pocket $pocket
+     */
     public function add(Pocket $pocket): void
     {
         $this->em->persist($pocket);
