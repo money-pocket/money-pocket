@@ -5,7 +5,7 @@ namespace App\Model\Pocket\Entity\Pocket;
 
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityNotFoundException;
+use App\Model\EntityNotFoundException;
 use Doctrine\Persistence\ObjectRepository;
 
 class PocketRepository
