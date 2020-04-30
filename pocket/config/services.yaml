@@ -26,3 +26,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Model\Pocket\Service\InviteTokenizer:
+        factory: 'App\Container\Model\Pocket\Service\InviteTokenizerFactory:create'
+        arguments: ['PT1H']
